@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DUBCOM - Tech Marketing Solutions and Automation with n8n. We offer CRM/ERP integration, WhatsApp bots and process automation for your business.">
+    <meta name="keywords" content="automation, n8n, tech marketing, WhatsApp bots, CRM, ERP, integration, Chatwoot, Mautic">
+    <meta name="author" content="DUBCOM">
+    <meta property="og:title" content="DUBCOM - Tech Marketing and Automation Solutions">
+    <meta property="og:description" content="Smart automation with n8n, WhatsApp bots and CRM/ERP integration to boost your business.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dubcom.com.br/en">
+    <meta property="og:image" content="https://dubcom.com.br/wp-content/uploads/2023/04/Horizontal.png.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://dubcom.com.br/en">
+    <title>DUBCOM - Tech Marketing & Automation Solutions with n8n | WhatsApp Bots | CRM/ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="alternate" hreflang="en" href="https://huggingface.co/spaces/dubcom/sitedubcom" />
+    <link rel="alternate" hreflang="pt-BR" href="https://huggingface.co/spaces/dubcom/sitedubcom" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#10b981',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        .success-message {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+        
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .honey {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+            z-index: 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .language-switcher:hover .language-dropdown {
+            display: block;
+        }
+        
+        .language-dropdown a {
+            color: #1e293b;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .language-dropdown a:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .language-dropdown a.active {
+            background-color: #2563eb;
+            color: white;
+        }
+        
+        .language-flag {
+            width: 20px;
+            height: 15px;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        /* Modal styles */
+        .modal {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .modal-content {
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        /* Custom image styles */
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+        }
+        
+        .solution-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-light text-dark">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#home" class="flex items-center">
+                    <!-- Replace with your actual logo -->
+                    <img src="https://dubcom.com.br/wp-content/uploads/2023/04/Horizontal.png.webp" alt="DUBCOM Logo" class="h-10">
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="text-dark hover:text-primary font-medium">Home</a>
+                <a href="#services" class="text-dark hover:text-primary font-medium">Services</a>
+                <a href="#solutions" class="text-dark hover:text-primary font-medium">Solutions</a>
+                <a href="#about" class="text-dark hover:text-primary font-medium">About</a>
+                <a href="#contact" class="text-dark hover:text-primary font-medium">Contact</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <div class="language-switcher">
+                    <button class="flex items-center text-dark hover:text-primary">
+                        <span class="language-flag" style="background-image: url('https://flagcdn.com/w20/gb.png'); background-size: cover;"></span>
+                        <span>EN</span>
+                        <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="language-dropdown">
+                        <a href="https://dubcom.com.br" class="flex items-center">
+                            <span class="language-flag" style="background-image: url('https://flagcdn.com/w20/br.png'); background-size: cover;"></span>
+                            <span>Português</span>
+                        </a>
+                        <a href="https://dubcom.com.br/en" class="flex items-center active">
+                            <span class="language-flag" style="background-image: url('https://flagcdn.com/w20/gb.png'); background-size: cover;"></span>
+                            <span>English</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <button class="md:hidden text-dark hover:text-primary" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-white w-full py-4 px-4 shadow-md" id="mobile-menu">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="text-dark hover:text-primary font-medium">Home</a>
+                <a href="#services" class="text-dark hover:text-primary font-medium">Services</a>
+                <a href="#solutions" class="text-dark hover:text-primary font-medium">Solutions</a>
+                <a href="#about" class="text-dark hover:text-primary font-medium">About</a>
+                <a href="#contact" class="text-dark hover:text-primary font-medium">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-20 bg-gradient-to-r from-primary to-secondary text-white">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Transform Your Business with Smart Automation</h1>
+                <p class="text-xl mb-8">We create customized automation solutions using n8n to streamline your processes, integrate systems, and boost productivity.</p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#contact" class="bg-white text-primary font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition duration-300 text-center">Get Started</a>
+                    <a href="#solutions" class="border-2 border-white text-white font-bold py-3 px-6 rounded-lg hover:bg-white hover:bg-opacity-10 transition duration-300 text-center">Our Solutions</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <!-- Suggested hero image: Abstract automation concept -->
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Automation Illustration" class="w-full max-w-md rounded-lg floating shadow-xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">We offer comprehensive automation solutions tailored to your business needs.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-light p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <!-- Suggested icon: Process automation -->
+                    <img src="https://cdn-icons-png.flaticon.com/512/1063/1063196.png" alt="Process Automation" class="service-icon mx-auto">
+                    <h3 class="text-xl font-bold mb-4">Process Automation</h3>
+                    <p class="text-gray-600">Automate repetitive tasks and workflows to save time and reduce errors in your daily operations.</p>
+                </div>
+                
+                <div class="bg-light p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <!-- Suggested icon: System integration -->
+                    <img src="https://cdn-icons-png.flaticon.com/512/2883/2883813.png" alt="System Integration" class="service-icon mx-auto">
+                    <h3 class="text-xl font-bold mb-4">System Integration</h3>
+                    <p class="text-gray-600">Connect your CRM, ERP, marketing tools and other systems for seamless data flow across platforms.</p>
+                </div>
+                
+                <div class="bg-light p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <!-- Suggested icon: WhatsApp bots -->
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp Bots" class="service-icon mx-auto">
+                    <h3 class="text-xl font-bold mb-4">WhatsApp Bots</h3>
+                    <p class="text-gray-600">Automate customer interactions on WhatsApp with intelligent chatbots for support, sales and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-20 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Solutions</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Custom automation solutions designed for your specific business challenges.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <!-- Suggested image: n8n automation -->
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="n8n Automation" class="solution-image">
+                    <h3 class="text-xl font-bold mb-4">n8n Automation</h3>
+                    <p class="text-gray-600 mb-6">We implement powerful automation workflows using n8n, the open-source workflow automation tool that connects all your apps and services.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Custom workflow automation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>CRM/ERP integration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Data synchronization</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <!-- Suggested image: WhatsApp business -->
+                    <img src="https://images.unsplash.com/photo-1631725999030-49598a4f7d3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="WhatsApp Business Solutions" class="solution-image">
+                    <h3 class="text-xl font-bold mb-4">WhatsApp Business Solutions</h3>
+                    <p class="text-gray-600 mb-6">Automate customer communication on WhatsApp with our intelligent chatbot solutions for support, sales, and engagement.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Automated customer support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Order tracking</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Marketing campaigns</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <!-- Suggested image: Chatwoot implementation -->
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Chatwoot Implementation" class="solution-image">
+                    <h3 class="text-xl font-bold mb-4">Chatwoot Implementation</h3>
+                    <p class="text-gray-600 mb-6">Open-source customer engagement platform that helps businesses manage conversations across multiple channels from a single dashboard.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Omnichannel support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Team collaboration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>CRM integration</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <!-- Suggested image: Mautic marketing -->
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1415&q=80" alt="Mautic Marketing Automation" class="solution-image">
+                    <h3 class="text-xl font-bold mb-4">Mautic Marketing Automation</h3>
+                    <p class="text-gray-600 mb-6">Open-source marketing automation platform that helps you nurture leads and automate marketing campaigns.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Email marketing automation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Lead scoring</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Customer segmentation</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">About DUBCOM</h2>
+                    <p class="text-gray-600 mb-6">We are a technology company specialized in marketing automation and business process optimization. Our mission is to help businesses work smarter through automation.</p>
+                    <p class="text-gray-600 mb-8">With expertise in n8n, WhatsApp Business API, Chatwoot, Mautic and other open-source tools, we create customized solutions that integrate with your existing systems to streamline operations and improve customer experience.</p>
+                    <div class="flex space-x-4">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary">50+</div>
+                            <div class="text-gray-600">Clients</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary">100+</div>
+                            <div class="text-gray-600">Projects</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary">5+</div>
+                            <div class="text-gray-600">Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <!-- Suggested image: Team working -->
+                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="DUBCOM Team" class="rounded-xl shadow-md w-full">
+                </div>
+            </div>
+            
+            <!-- Client Logos Section -->
+            <div class="mt-20">
+                <h3 class="text-2xl font-bold text-center mb-8">Trusted By</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+                    <!-- Replace with actual client logos -->
+                    <img src="https://via.placeholder.com/150x80?text=Client+1" alt="Client Logo" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
+                    <img src="https://via.placeholder.com/150x80?text=Client+2" alt="Client Logo" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
+                    <img src="https://via.placeholder.com/150x80?text=Client+3" alt="Client Logo" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
+                    <img src="https://via.placeholder.com/150x80?text=Client+4" alt="Client Logo" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-primary text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
+                <p class="text-lg text-white text-opacity-80 max-w-2xl mx-auto">Hear from businesses that have transformed their operations with our solutions.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <p class="text-white text-opacity-70 text-sm">Marketing Director</p>
+                        </div>
+                    </div>
+                    <p class="italic">"DUBCOM's WhatsApp automation solution helped us reduce response times by 80% while maintaining a personal touch with our customers."</p>
+                    <div class="flex mt-4 text-yellow-300">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <p class="text-white text-opacity-70 text-sm">Operations Manager</p>
+                        </div>
+                    </div>
+                    <p class="italic">"The n8n workflows DUBCOM implemented saved us over 20 hours per week in manual data entry and reporting tasks."</p>
+                    <div class="flex mt-4 text-yellow-300">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Ana Rodriguez</h4>
+                            <p class="text-white text-opacity-70 text-sm">CEO</p>
+                        </div>
+                    </div>
+                    <p class="italic">"Their Chatwoot implementation transformed our customer support, giving us a unified view of all customer interactions across channels."</p>
+                    <div class="flex mt-4 text-yellow-300">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Contact Us</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Ready to automate your business? Get in touch with our team.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <form id="contact-form" class="space-y-6">
+                        <input type="text" class="honey" name="honey">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Phone (optional)</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition duration-300">Send Message</button>
+                    </form>
+                    <div id="success-message" class="success-message mt-6 p-4 bg-green-100 text-green-700 rounded-lg">
+                        Thank you for your message! We'll get back to you soon.
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-primary mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium">Address</h4>
+                                    <p class="text-gray-600">123 Automation Street, Tech City</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-primary mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600">contact@dubcom.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt text-primary mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium">Phone</h4>
+                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Business Hours</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">Monday - Friday</span>
+                                <span class="text-gray-600">9:00 AM - 6:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">Saturday</span>
+                                <span class="text-gray-600">10:00 AM - 2:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-700">Sunday</span>
+                                <span class="text-gray-600">Closed</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Follow Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Map placeholder -->
+                    <div class="rounded-xl overflow-hidden">
+                        <!-- Replace with actual map embed -->
+                        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Tech+City&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7CTech+City&key=YOUR_API_KEY" alt="Map" class="w-full h-48 object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="https://dubcom.com.br/wp-content/uploads/2023/04/Horizontal-white.png.webp" alt="DUBCOM Logo" class="h-10 mb-4">
+                    <p class="text-gray-400">Smart automation solutions to transform your business operations and customer experience.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Services</a></li>
+                        <li><a href="#solutions" class="text-gray-400 hover:text-white transition duration-300">Solutions</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Process Automation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">System Integration</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">WhatsApp Bots</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Chatwoot Implementation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Mautic Marketing</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and insights.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg text-dark w-full">
+                        <button type="submit" class="bg-primary px-4 py-2 rounded-r-lg hover:bg-opacity-90 transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 DUBCOM. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-opacity-90 transition duration-300 hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Modal -->
+    <div id="modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="modal-content bg-white rounded-lg max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Thank You!</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="text-gray-600 mb-6">Your message has been successfully sent. Our team will get back to you shortly.</p>
+            <button id="modal-ok" class="w-full bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        const successMessage = document.getElementById('success-message');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simple form validation
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && message) {
+                // In a real scenario, you would send the form data to a server here
+                contactForm.reset();
+                
+                // Show success message
+                successMessage.classList.add('show');
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+                
+                // Alternatively, show modal
+                // document.getElementById('modal').classList.add('show');
+            }
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('hidden');
+            } else {
+                backToTopButton.classList.add('hidden');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Modal functionality
+        const modal = document.getElementById('modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalOk = document.getElementById('modal-ok');
+        
+        function showModal() {
+            modal.classList.add('show');
+        }
+        
+        function hideModal() {
+            modal.classList.remove('show');
+        }
+        
+        closeModal.addEventListener('click', hideModal);
+        modalOk.addEventListener('click', hideModal);
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                hideModal();
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</html>

@@ -1,0 +1,5 @@
+name = "dubcom"
+main = "src/index.js"
+workers_dev = true
+compatibility_date = "2025-04-15"
+compatibility_flags = [ "nodejs_compat" ]
