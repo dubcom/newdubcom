@@ -1,4 +1,4 @@
-import welcome from "index.html";
+import welcome from "index_en.html";
 
 /**
  * @typedef {Object} Env
