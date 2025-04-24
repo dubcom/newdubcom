@@ -1,4 +1,4 @@
-import indexPt from "./index.html";
+import indexPt from "./pt/index.html";
 import indexEn from "./en/index_en.html";
 
 export default {
