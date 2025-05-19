@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class=""> <!-- Ensure class is present for dark mode JS -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,219 +9,207 @@
     <meta property="og:title" content="DUBCOM - Soluções de Marketing e Automação">
     <meta property="og:description" content="Automação inteligente com n8n, bots de WhatsApp e integração CRM/ERP para impulsionar o seu negócio.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://dubcom.com.br/en">
-    <meta property="og:image" content="https://raw.githubusercontent.com/dubcom/newdubcom/refs/heads/master/src/image/Horizontal.png">
+    <!-- Update OG URL if this is the Portuguese version -->
+    <meta property="og:url" content="https://dubcom.com.br/">
+    <meta property="og:image" content="https://f005.backblazeb2.com/file/DubcomChatwoot/Horizontal.png">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://dubcom.com.br/pt">
+    <!-- Canonical should point to itself -->
+    <link rel="canonical" href="https://dubcom.com.br/">
     <title>DUBCOM - Soluções de Marketing & Automação com n8n | Bots de WhatsApp | CRM/ERP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://f005.backblazeb2.com/file/DubcomChatwoot/favicon.ico" type="image/x-icon">
 
     <script>
         tailwind.config = {
+            darkMode: 'class', // This is correct
             theme: {
                 extend: {
                     colors: {
                         primary: '#2563eb',
                         secondary: '#10b981',
-                        dark: '#1e293b',
-                        light: '#f8fafc'
+                        dark: '#111827', // Adjusted dark background for better contrast potentially
+                        light: '#f8fafc',
+                        'dark-text': '#f8fafc', // Explicit dark mode text
+                        'light-text': '#1e293b', // Explicit light mode text
+                        gray: {
+                           ...tailwind.colors.gray,
+                           // Adjusted grays for dark mode if needed
+                           100: '#f3f4f6',
+                           200: '#e5e7eb',
+                           300: '#d1d5db',
+                           400: '#9ca3af',
+                           500: '#6b7280',
+                           600: '#4b5563',
+                           700: '#374151',
+                           800: '#1f2937',
+                           900: '#111827'
+                        }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                    },
+                    ringColor: {
+                       DEFAULT: '#2563eb',
+                       primary: '#2563eb',
                     },
                 }
             }
         }
     </script>
+     <!-- Script Dark Mode (Uncommented and refined) -->
+     <script>
+        // Function to apply theme
+        const applyTheme = (theme) => {
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+          localStorage.theme = theme;
+        };
+
+        // Function to toggle theme
+        const toggleTheme = () => {
+          const currentTheme = localStorage.theme === 'dark' ? 'light' : 'dark';
+          applyTheme(currentTheme);
+        };
+
+        // Apply theme on initial load
+        const storedTheme = localStorage.theme;
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
+          applyTheme('dark');
+        } else {
+          applyTheme('light'); // Default to light
+        }
+     </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
+            /* Apply base text colors for light/dark modes */
+            @apply text-light-text dark:text-dark-text;
         }
-        
         .form-input {
             transition: all 0.3s ease;
+            /* Ensure inputs are styled for dark mode */
+            @apply bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-light-text dark:text-dark-text placeholder-gray-400 dark:placeholder-gray-500;
         }
-        
         .form-input:focus {
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            @apply ring-primary border-primary ring-2 ring-opacity-50; /* Use Tailwind focus */
         }
-        
         .success-message {
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.4s ease;
+            /* Style success message for dark mode */
+            @apply bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200;
         }
-        
         .success-message.show {
             opacity: 1;
             transform: translateY(0);
         }
-        
-        .honey {
-            position: absolute;
-            left: -9999px;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .language-switcher {
-            position: relative;
-            display: inline-block;
-        }
-        
+        .honey { position: absolute; left: -9999px; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .floating { animation: float 3s ease-in-out infinite; }
+
+        .language-switcher { position: relative; display: inline-block; }
         .language-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: white;
-            min-width: 120px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-            z-index: 1;
-            border-radius: 8px;
-            overflow: hidden;
+            display: none; position: absolute; right: 0; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); z-index: 1; border-radius: 8px; overflow: hidden;
+            @apply bg-white dark:bg-gray-800; /* Dark mode background */
         }
-        
-        .language-switcher:hover .language-dropdown {
-            display: block;
-        }
-        
+        .language-switcher:hover .language-dropdown { display: block; }
         .language-dropdown a {
-            color: #1e293b;
-            padding: 8px 16px;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.3s;
+            padding: 8px 16px; text-decoration: none; display: block; transition: background-color 0.3s;
+            @apply text-light-text dark:text-dark-text; /* Text color */
         }
-        
-        .language-dropdown a:hover {
-            background-color: #f1f5f9;
-        }
-        
-        .language-dropdown a.active {
-            background-color: #2563eb;
-            color: white;
-        }
-        
-        .language-flag {
-            width: 20px;
-            height: 15px;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-        
-        /* Modal styles */
-        .modal {
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .modal-content {
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
-        
-        .modal.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .modal.show .modal-content {
-            transform: translateY(0);
-        }
-        
-        /* Custom image styles */
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            margin-bottom: 1.5rem;
-        }
-        
-        .solution-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        img {
-            width: 150px;
-            height: 80px;
+        .language-dropdown a:hover { @apply bg-primary/10 dark:bg-primary/30; } /* Hover effect */
+        .language-dropdown a.active { @apply bg-primary text-white dark:text-white; } /* Active state */
+        .language-flag { width: 20px; height: 15px; display: inline-block; margin-right: 8px; vertical-align: middle; }
+
+        .modal { transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }
+        .modal-content { transform: translateY(20px); transition: all 0.3s ease; }
+        .modal.show { opacity: 1; pointer-events: all; }
+        .modal.show .modal-content { transform: translateY(0); }
+        .service-icon { width: 80px; height: 80px; object-fit: contain; margin-bottom: 1.5rem; }
+        .solution-image { width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+
+        /* Dark Mode Toggle Button Style */
+        #dark-mode-toggle {
+            @apply w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300;
         }
     </style>
 </head>
-<body class="bg-light text-dark">
+<body class="font-sans bg-light dark:bg-dark antialiased"> <!-- Base colors applied via style tag -->
+
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50 transition-colors duration-300">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center">
                 <a href="#home" class="flex items-center">
-                    <!-- Substitua pelo seu logotipo real -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/Horizontal.png" alt="DUBCOM automação Logo" class="h-10">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/Horizontal.png" alt="DUBCOM automação Logo" class="h-10">
                 </a>
             </div>
-            
             <nav class="hidden md:flex space-x-8">
-                <a href="#home" class="text-dark hover:text-primary font-medium">Início</a>
-                <a href="#services" class="text-dark hover:text-primary font-medium">Serviços</a>
-                <a href="#solutions" class="text-dark hover:text-primary font-medium">Soluções</a>
-                <a href="#about" class="text-dark hover:text-primary font-medium">Sobre</a>
-                <a href="#contact" class="text-dark hover:text-primary font-medium">Contato</a>
+                 <!-- Added dark mode text color -->
+                <a href="#home" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Início</a>
+                <a href="#services" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Serviços</a>
+                <a href="#solutions" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Soluções</a>
+                <a href="#about" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Sobre</a>
+                <a href="#contact" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Contato</a>
             </nav>
-            
             <div class="flex items-center space-x-4">
+                <!-- Language Switcher -->
                 <div class="language-switcher">
-                    <button class="flex items-center text-dark hover:text-primary">
-                        <span class="language-flag" style="background-image: url('https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/br.png'); background-size: cover;"></span>
+                    <button class="flex items-center text-light-text dark:text-dark-text hover:text-primary">
+                        <span class="language-flag" style="background-image: url('https://f005.backblazeb2.com/file/DubcomChatwoot/br.png'); background-size: cover;"></span>
                         <span>PT</span>
                         <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </button>
                     <div class="language-dropdown">
                         <a href="/" class="flex items-center active">
-                            <span class="language-flag" style="background-image: url('https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/br.png'); background-size: cover;"></span>
+                            <span class="language-flag" style="background-image: url('https://f005.backblazeb2.com/file/DubcomChatwoot/br.png'); background-size: cover;"></span>
                             <span>Português</span>
                         </a>
-                        <a href="en/index_en.html" class="flex items-center">
-                            <span class="language-flag" style="background-image: url('https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/gb.png'); background-size: cover;"></span>
+                        <a href="en/index_en.html" class="flex items-center"> <!-- Assuming English path -->
+                            <span class="language-flag" style="background-image: url('https://f005.backblazeb2.com/file/DubcomChatwoot/gb.png'); background-size: cover;"></span>
                             <span>Inglês</span>
                         </a>
                     </div>
                 </div>
-                
-                <button class="md:hidden text-dark hover:text-primary" id="mobile-menu-button">
+
+                <!-- Dark Mode Toggle Button -->
+                <button id="dark-mode-toggle" aria-label="Alternar modo claro/escuro">
+                    <i class="fas fa-moon dark:hidden"></i> <!-- Show moon in light mode -->
+                    <i class="fas fa-sun hidden dark:inline"></i> <!-- Show sun in dark mode -->
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-light-text dark:text-dark-text hover:text-primary" id="mobile-menu-button" aria-label="Abrir menu móvel">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
-        
-        <!-- Menu móvel -->
-        <div class="md:hidden hidden bg-white w-full py-4 px-4 shadow-md" id="mobile-menu">
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-white dark:bg-gray-800 w-full py-4 px-4 shadow-md transition-colors duration-300" id="mobile-menu">
             <div class="flex flex-col space-y-4">
-                <a href="#home" class="text-dark hover:text-primary font-medium">Início</a>
-                <a href="#services" class="text-dark hover:text-primary font-medium">Serviços</a>
-                <a href="#solutions" class="text-dark hover:text-primary font-medium">Soluções</a>
-                <a href="#about" class="text-dark hover:text-primary font-medium">Sobre</a>
-                <a href="#contact" class="text-dark hover:text-primary font-medium">Contato</a>
+                <a href="#home" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Início</a>
+                <a href="#services" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Serviços</a>
+                <a href="#solutions" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Soluções</a>
+                <a href="#about" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Sobre</a>
+                <a href="#contact" class="text-light-text dark:text-dark-text hover:text-primary font-medium">Contato</a>
             </div>
         </div>
     </header>
 
-    <!-- Seção Hero -->
+    <!-- Hero Section -->
     <section id="home" class="py-20 bg-gradient-to-r from-primary to-secondary text-white">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-10 md:mb-0">
@@ -233,368 +221,268 @@
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center">
-                <!-- Imagem sugerida para o hero: Conceito abstrato de automação -->
-                <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/photo-1551288049-bebda4e38f71.avif" alt="Ilustração de Automação" class="w-full max-w-md rounded-lg floating shadow-xl">
+                 <!-- Added alt text, loading=lazy might not be needed if always above fold -->
+                <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/1.png" alt="Ilustração abstrata de engrenagens e conexões simbolizando automação" class="w-full max-w-md rounded-lg floating shadow-xl">
             </div>
         </div>
     </section>
 
-    <!-- Seção de Serviços -->
-    <section id="services" class="py-20 bg-white">
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Nossos Serviços</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Oferecemos soluções de automação abrangentes adaptadas às necessidades do seu negócio.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-light-text dark:text-dark-text">Nossos Serviços</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Oferecemos soluções de automação abrangentes adaptadas às necessidades do seu negócio.</p>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-light p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
-                    <!-- Ícone sugerido: Automação de processos -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/1063196.png" alt="Automação de Processos" class="service-icon mx-auto">
-                    <h3 class="text-xl font-bold mb-4">Automação de Processos</h3>
-                    <p class="text-gray-600">Automatize tarefas repetitivas e fluxos de trabalho para economizar tempo e reduzir erros em suas operações diárias.</p>
+                <!-- Service Item 1 -->
+                <div class="bg-light dark:bg-gray-800 p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/1063196.png" alt="Ícone de Automação de Processos" class="service-icon mx-auto" loading="lazy">
+                    <h3 class="text-xl font-bold mb-4 text-light-text dark:text-dark-text">Automação de Processos</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Automatize tarefas repetitivas e fluxos de trabalho para economizar tempo e reduzir erros em suas operações diárias.</p>
                 </div>
-                
-                <div class="bg-light p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
-                    <!-- Ícone sugerido: Integração de sistemas -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/2883813.png" alt="Integração de Sistemas" class="service-icon mx-auto">
-                    <h3 class="text-xl font-bold mb-4">Integração de Sistemas</h3>
-                    <p class="text-gray-600">Conecte seu CRM, ERP, ferramentas de marketing e outros sistemas para um fluxo de dados contínuo entre plataformas.</p>
+                <!-- Service Item 2 -->
+                <div class="bg-light dark:bg-gray-800 p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/2883813.png" alt="Ícone de Integração de Sistemas" class="service-icon mx-auto" loading="lazy">
+                    <h3 class="text-xl font-bold mb-4 text-light-text dark:text-dark-text">Integração de Sistemas</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Conecte seu CRM, ERP, ferramentas de marketing e outros sistemas para um fluxo de dados contínuo entre plataformas.</p>
                 </div>
-                
-                <div class="bg-light p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
-                    <!-- Ícone sugerido: Bots de WhatsApp -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/733585.png" alt="Bots de WhatsApp" class="service-icon mx-auto">
-                    <h3 class="text-xl font-bold mb-4">Bots de WhatsApp</h3>
-                    <p class="text-gray-600">Automatize interações com clientes no WhatsApp com chatbots inteligentes para suporte, vendas e mais.</p>
+                <!-- Service Item 3 -->
+                <div class="bg-light dark:bg-gray-800 p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                     <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/733585.png" alt="Ícone do WhatsApp representando Bots" class="service-icon mx-auto" loading="lazy">
+                    <h3 class="text-xl font-bold mb-4 text-light-text dark:text-dark-text">Bots de WhatsApp</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Automatize interações com clientes no WhatsApp com chatbots inteligentes para suporte, vendas e mais.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção de Soluções -->
-    <section id="solutions" class="py-20 bg-light">
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-20 bg-light dark:bg-dark transition-colors duration-300">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Nossas Soluções</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Soluções de automação personalizadas projetadas para os desafios específicos do seu negócio.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-light-text dark:text-dark-text">Nossas Soluções</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Soluções de automação personalizadas projetadas para os desafios específicos do seu negócio.</p>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <div class="bg-white p-8 rounded-xl shadow-sm">
-                    <!-- Imagem sugerida: Automação n8n -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/photo-1551288049-bebda4e38f71.avif" alt="Automação n8n" class="solution-image">
-                    <h3 class="text-xl font-bold mb-4">Automação n8n</h3>
-                    <p class="text-gray-600 mb-6">Implementamos poderosos fluxos de automação usando n8n, a ferramenta de automação de fluxo de trabalho de código aberto que conecta todos os seus aplicativos e serviços.</p>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Automação de fluxo de trabalho personalizada</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Integração CRM/ERP</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Sincronização de dados</span>
-                        </li>
+                <!-- Solution Item 1: n8n -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm transition-colors duration-300">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/1.png" alt="Fluxo de trabalho visual n8n com nós conectados" class="solution-image" loading="lazy">
+                    <h3 class="text-xl font-bold mb-4 text-light-text dark:text-dark-text">Automação n8n</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Implementamos poderosos fluxos de automação usando n8n...</p>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Automação de fluxo de trabalho personalizada</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Integração CRM/ERP</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Sincronização de dados</span></li>
                     </ul>
                 </div>
-                
-                <div class="bg-white p-8 rounded-xl shadow-sm">
-                    <!-- Imagem sugerida: Soluções de negócios WhatsApp -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/photo-1738107450287-8ccd5a2f8806.avif" alt="WhatsApp Business Solutions" class="solution-image">
-                    <h3 class="text-xl font-bold mb-4">Soluções de Negócios WhatsApp</h3>
-                    <p class="text-gray-600 mb-6">Automatize a comunicação com clientes no WhatsApp com nossas soluções de chatbot inteligentes para suporte, vendas e engajamento.</p>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Suporte ao cliente automatizado</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Rastreamento de pedidos</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Campanhas de marketing</span>
-                        </li>
+                 <!-- Solution Item 2: WhatsApp -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm transition-colors duration-300">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/3.png" alt="Interface de chat do WhatsApp Business" class="solution-image" loading="lazy">
+                    <h3 class="text-xl font-bold mb-4 text-light-text dark:text-dark-text">Soluções de Negócios WhatsApp</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Automatize a comunicação com clientes no WhatsApp...</p>
+                     <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Suporte ao cliente automatizado</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Rastreamento de pedidos</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Campanhas de marketing</span></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-sm">
-                    <!-- Imagem sugerida: Implementação Chatwoot -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/photo-1522071820081-009f0129c71c.avif" alt="Implementação Chatwoot" class="solution-image">
-                    <h3 class="text-xl font-bold mb-4">Implementação Chatwoot</h3>
-                    <p class="text-gray-600 mb-6">Plataforma de engajamento de clientes de código aberto que ajuda as empresas a gerenciar conversas em vários canais a partir de um único painel.</p>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Suporte omnicanal</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Colaboração em equipe</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Integração CRM</span>
-                        </li>
+                <!-- Solution Item 3: Chatwoot -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm transition-colors duration-300">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/2.png" alt="Dashboard do Chatwoot mostrando conversas omnicanal" class="solution-image" loading="lazy">
+                    <h3 class="text-xl font-bold mb-4 text-light-text dark:text-dark-text">Implementação Chatwoot</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Plataforma de engajamento de clientes de código aberto...</p>
+                     <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Suporte omnicanal</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Colaboração em equipe</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Integração CRM</span></li>
                     </ul>
                 </div>
-                
-                <div class="bg-white p-8 rounded-xl shadow-sm">
-                    <!-- Imagem sugerida: Marketing Mautic -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/photo-1460925895917-afdab827c52f.avif" alt="Automação de Marketing Mautic" class="solution-image">
-                    <h3 class="text-xl font-bold mb-4">Automação de Marketing Mautic</h3>
-                    <p class="text-gray-600 mb-6">Plataforma de automação de marketing de código aberto que ajuda você a nutrir leads e automatizar campanhas de marketing.</p>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Automação de marketing por e-mail</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Pontuação de leads</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
-                            <span>Segmentação de clientes</span>
-                        </li>
+                 <!-- Solution Item 4: Mautic -->
+                 <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm transition-colors duration-300">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/4.png" alt="Interface do Mautic mostrando campanhas de automação de marketing" class="solution-image" loading="lazy">
+                    <h3 class="text-xl font-bold mb-4 text-light-text dark:text-dark-text">Automação de Marketing Mautic</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Plataforma de automação de marketing de código aberto...</p>
+                     <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Automação de marketing por e-mail</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Pontuação de leads</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-secondary mt-1 mr-2"></i><span>Segmentação de clientes</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção Sobre -->
-    <section id="about" class="py-20 bg-white">
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Sobre a DUBCOM</h2>
-                    <p class="text-gray-600 mb-6">Somos uma empresa de tecnologia especializada em automação de marketing e otimização de processos de negócios. Nossa missão é ajudar as empresas a trabalharem de forma mais inteligente por meio da automação.</p>
-                    <p class="text-gray-600 mb-8">Com expertise em n8n, API do WhatsApp Business, Chatwoot, Mautic e outras ferramentas de código aberto, criamos soluções personalizadas que se integram aos seus sistemas existentes para otimizar operações e melhorar a experiência do cliente.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-light-text dark:text-dark-text">Sobre a DUBCOM</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Somos uma empresa de tecnologia especializada...</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8">Com expertise em n8n, API do WhatsApp Business...</p>
                     <div class="flex space-x-4">
                         <div class="text-center">
                             <div class="text-3xl font-bold text-primary">50+</div>
-                            <div class="text-gray-600">Clientes</div>
+                            <div class="text-gray-600 dark:text-gray-400">Clientes</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-primary">100+</div>
-                            <div class="text-gray-600">Projetos</div>
+                            <div class="text-gray-600 dark:text-gray-400">Projetos</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-primary">5+</div>
-                            <div class="text-gray-600">Anos de Experiência</div>
+                            <div class="text-gray-600 dark:text-gray-400">Anos de Experiência</div>
                         </div>
                     </div>
                 </div>
                 <div class="md:w-1/2">
-                    <!-- Imagem sugerida: Equipe trabalhando -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/photo-1579389083078-4e7018379f7e.avif" alt="Equipe DUBCOM" class="rounded-xl shadow-md w-full">
+                     <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/6.png" alt="Equipe DUBCOM colaborando em um projeto" class="rounded-xl shadow-md w-full" loading="lazy">
                 </div>
             </div>
-            
-            <!-- Seção de Logos de Clientes -->
-            <div class="mt-20 p-10 w-full rounded-xl" style="background-color: #4275edcc;">
+            <!-- Client Logos Section -->
+            <div class="mt-20 p-10 w-full rounded-xl" style="background-color: #4275edcc;"> <!-- Consider adjusting color for dark mode or using Tailwind classes -->
                 <h3 class="text-2xl font-bold text-center mb-4 text-white">Trusted By</h3>
-                <div class="grid grid-cols-2 w-full md:grid-cols-4 gap-8 items-center" >
-                    <!-- Replace with actual client logos -->
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/logo.png" alt="Client Logo" width="150" height="80" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/Logo_R3_Fundo_Transparente_PNG.png" alt="Client Logo" width="150" height="80" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/1698685168456.jpeg" alt="Client Logo" width="150" height="80" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/150x80.avif" alt="Client Logo" width="150" height="80" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto">
+                <div class="grid grid-cols-2 w-full md:grid-cols-4 gap-8 items-center">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/logo.png" alt="Logo Cliente 1" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto filter dark:brightness-0 dark:invert" loading="lazy">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/Logo_R3_Fundo_Transparente_PNG.png" alt="Logo Cliente R3" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto filter dark:brightness-0 dark:invert" loading="lazy">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/1698685168456.jpeg" alt="Logo Cliente 3" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto filter dark:brightness-0 dark:invert" loading="lazy">
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/150x80.avif" alt="Logo Cliente 4" class="h-12 object-contain opacity-70 hover:opacity-100 transition duration-300 mx-auto filter dark:brightness-0 dark:invert" loading="lazy">
+                     <!-- Added dark mode filter to make logos visible on dark backgrounds -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção de Depoimentos -->
-    <section class="py-20 bg-primary text-white">
+     <!-- Testimonials Section -->
+    <section class="py-20 bg-primary text-white"> <!-- Primary background usually works well in both modes -->
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">O Que Nossos Clientes Dizem</h2>
                 <p class="text-lg text-white text-opacity-80 max-w-2xl mx-auto">Ouça de empresas que transformaram suas operações com nossas soluções.</p>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur-sm">
+                <!-- Testimonial 1 -->
+                <div class="bg-white bg-opacity-10 dark:bg-opacity-20 p-8 rounded-xl backdrop-blur-sm">
                     <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold">Sarah Johnson</h4>
-                            <p class="text-white text-opacity-70 text-sm">Diretora de Marketing</p>
-                        </div>
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Foto de Sarah Johnson" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                        <div><h4 class="font-bold">Sarah Johnson</h4><p class="text-white text-opacity-70 text-sm">Diretora de Marketing</p></div>
                     </div>
-                    <p class="italic">"A solução de automação do WhatsApp da DUBCOM nos ajudou a reduzir os tempos de resposta em 80% enquanto mantínhamos um toque pessoal com nossos clientes."</p>
-                    <div class="flex mt-4 text-yellow-300">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
+                    <p class="italic">"A solução de automação do WhatsApp da DUBCOM..."</p>
+                    <div class="flex mt-4 text-yellow-300"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                 </div>
-                
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur-sm">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold">Michael Chen</h4>
-                            <p class="text-white text-opacity-70 text-sm">Gerente de Operações</p>
-                        </div>
+                 <!-- Testimonial 2 -->
+                <div class="bg-white bg-opacity-10 dark:bg-opacity-20 p-8 rounded-xl backdrop-blur-sm">
+                     <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Foto de Michael Chen" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                        <div><h4 class="font-bold">Michael Chen</h4><p class="text-white text-opacity-70 text-sm">Gerente de Operações</p></div>
                     </div>
-                    <p class="italic">"Os fluxos de trabalho n8n implementados pela DUBCOM nos economizaram mais de 20 horas por semana em tarefas manuais de entrada de dados e relatórios."</p>
-                    <div class="flex mt-4 text-yellow-300">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
+                    <p class="italic">"Os fluxos de trabalho n8n implementados pela DUBCOM..."</p>
+                    <div class="flex mt-4 text-yellow-300"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                 </div>
-                
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl backdrop-blur-sm">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold">Ana Rodriguez</h4>
-                            <p class="text-white text-opacity-70 text-sm">CEO</p>
-                        </div>
+                 <!-- Testimonial 3 -->
+                <div class="bg-white bg-opacity-10 dark:bg-opacity-20 p-8 rounded-xl backdrop-blur-sm">
+                     <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Foto de Ana Rodriguez" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                        <div><h4 class="font-bold">Ana Rodriguez</h4><p class="text-white text-opacity-70 text-sm">CEO</p></div>
                     </div>
-                    <p class="italic">"A implementação do Chatwoot transformou nosso suporte ao cliente, nos dando uma visão unificada de todas as interações com clientes em vários canais."</p>
-                    <div class="flex mt-4 text-yellow-300">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
+                    <p class="italic">"A implementação do Chatwoot transformou nosso suporte..."</p>
+                    <div class="flex mt-4 text-yellow-300"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção de Contato -->
-    <section id="contact" class="py-20 bg-light">
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-light dark:bg-dark transition-colors duration-300">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Fale Conosco</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Pronto para automatizar seu negócio? Entre em contato com nossa equipe.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-light-text dark:text-dark-text">Fale Conosco</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Pronto para automatizar seu negócio? Entre em contato com nossa equipe.</p>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
+                     <!-- Contact Form -->
                     <form id="contact-form" class="space-y-6">
-                        <input type="text" class="honey" name="honey">
+                        <input type="text" class="honey" name="honey"> <!-- Honeypot -->
                         <div>
-                            <label for="name" class="block text-gray-700 font-medium mb-2">Nome</label>
-                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                            <label for="name" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Nome</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg form-input">
                         </div>
                         <div>
-                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                            <label for="email" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg form-input">
                         </div>
                         <div>
-                            <label for="phone" class="block text-gray-700 font-medium mb-2">Telefone</label>
-                            <input type="tel" id="phone" name="phone" pattern="[0-9]*" inputmode="numeric" class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                             <label for="phone" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Telefone</label>
+                            <input type="tel" id="phone" name="phone" pattern="[0-9()+\-\s]*" inputmode="numeric" class="w-full px-4 py-3 rounded-lg form-input"> <!-- Loosened pattern slightly -->
                         </div>
                         <div>
-                            <label for="message" class="block text-gray-700 font-medium mb-2">Mensagem</label>
-                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50"></textarea>
+                            <label for="message" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Mensagem</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg form-input"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition duration-300">Enviar Mensagem</button>
+                        <button type="submit" class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 dark:hover:bg-blue-600 transition duration-300">Enviar Mensagem</button>
                     </form>
-                    <div id="success-message" class="success-message mt-6 p-4 bg-green-100 text-green-700 rounded-lg">
+                    <div id="success-message" class="success-message mt-6 p-4 rounded-lg"> <!-- Styles applied via @apply -->
                         Obrigado pela sua mensagem! Entraremos em contato em breve.
                     </div>
+                     <div id="error-message" class="error-message mt-6 p-4 rounded-lg bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 hidden"> <!-- Error message placeholder -->
+                        Ocorreu um erro ao enviar sua mensagem. Tente novamente.
+                    </div>
                 </div>
-                
-                <div class="space-y-8">
+                <div class="space-y-8 text-light-text dark:text-dark-text">
+                    <!-- Contact Info -->
                     <div>
                         <h3 class="text-xl font-bold mb-4">Informações de Contato</h3>
                         <div class="space-y-4">
-                            <div class="flex items-start">
-                                <i class="fas fa-map-marker-alt text-primary mt-1 mr-4"></i>
-                                <div>
-                                    <h4 class="font-medium">Endereço</h4>
-                                    <p class="text-gray-600">Florianópolis, SC - Brasil</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-envelope text-primary mt-1 mr-4"></i>
-                                <div>
-                                    <h4 class="font-medium">Email</h4>
-                                    <p class="text-gray-600">contato@dubcom.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fas fa-phone-alt text-primary mt-1 mr-4"></i>
-                                <div>
-                                    <h4 class="font-medium">Telefone</h4>
-                                    <p class="text-gray-600">+55 (48) 99685-8422</p>
-                                </div>
-                            </div>
+                             <div class="flex items-start"><i class="fas fa-map-marker-alt text-primary mt-1 mr-4"></i><div><h4 class="font-medium">Endereço</h4><p class="text-gray-600 dark:text-gray-400">Florianópolis, SC - Brasil</p></div></div>
+                            <div class="flex items-start"><i class="fas fa-envelope text-primary mt-1 mr-4"></i><div><h4 class="font-medium">Email</h4><p class="text-gray-600 dark:text-gray-400">contato@dubcom.com</p></div></div>
+                            <div class="flex items-start"><i class="fas fa-phone-alt text-primary mt-1 mr-4"></i><div><h4 class="font-medium">Telefone</h4><p class="text-gray-600 dark:text-gray-400">+55 (48) 99685-8422</p></div></div>
                         </div>
                     </div>
+                     <!-- Business Hours -->
                     <div>
                         <h3 class="text-xl font-bold mb-4">Horário de Funcionamento</h3>
                         <div class="space-y-2">
-                            <div class="flex justify-between">
-                                <span class="text-gray-700">Segunda - Sexta</span>
-                                <span class="text-gray-600">9:00 - 18:00</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-700">Sábado</span>
-                                <span class="text-gray-600">10:00 - 14:00</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-700">Domingo</span>
-                                <span class="text-gray-600">Fechado</span>
-                            </div>
+                            <div class="flex justify-between"><span class="text-gray-700 dark:text-gray-300">Segunda - Sexta</span><span class="text-gray-600 dark:text-gray-400">9:00 - 18:00</span></div>
+                            <div class="flex justify-between"><span class="text-gray-700 dark:text-gray-300">Sábado</span><span class="text-gray-600 dark:text-gray-400">10:00 - 14:00</span></div>
+                            <div class="flex justify-between"><span class="text-gray-700 dark:text-gray-300">Domingo</span><span class="text-gray-600 dark:text-gray-400">Fechado</span></div>
                         </div>
                     </div>
-                    
+                    <!-- Follow Us -->
                     <div>
                         <h3 class="text-xl font-bold mb-4">Siga-nos</h3>
                         <div class="flex space-x-4">
-                            <a href="https://www.facebook.com/compromitto" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="https://twitter.com/compromitto" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="https://www.linkedin.com/in/compromitto" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="https://www.instagram.com/compromitto" class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center hover:bg-opacity-20 transition duration-300">
-                                <i class="fab fa-instagram"></i>
-                            </a>
+                            <a href="https://www.facebook.com/compromitto" aria-label="Facebook DUBCOM" class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center hover:bg-primary/20 dark:hover:bg-primary/30 transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/compromitto" aria-label="Twitter DUBCOM" class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center hover:bg-primary/20 dark:hover:bg-primary/30 transition duration-300"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.linkedin.com/in/compromitto" aria-label="LinkedIn DUBCOM" class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center hover:bg-primary/20 dark:hover:bg-primary/30 transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.instagram.com/compromitto" aria-label="Instagram DUBCOM" class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center hover:bg-primary/20 dark:hover:bg-primary/30 transition duration-300"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="rounded-xl overflow-hidden">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d33406.19376252224!2d-48.58389204913775!3d-27.599197984301814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952739ceb0a74a1d%3A0x94ade615349ce8ea!2sServid%C3%A3o%20Leon%20Emilio%20Portela%2C%2094%20-%20Jos%C3%A9%20Mendes%2C%20Florian%C3%B3polis%20-%20SC%2C%2088021-056!5e0!3m2!1spt-BR!2sbr!4v1745238768620!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0; max-height: 400px; width: 100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+         <!-- Map -->
+        <div class="mt-12 rounded-xl overflow-hidden"> <!-- Added margin top -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d33406.19376252224!2d-48.58389204913775!3d-27.599197984301814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952739ceb0a74a1d%3A0x94ade615349ce8ea!2sServid%C3%A3o%20Leon%20Emilio%20Portela%2C%2094%20-%20Jos%C3%A9%20Mendes%2C%20Florian%C3%B3polis%20-%20SC%2C%2088021-056!5e0!3m2!1spt-BR!2sbr!4v1745238768620!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0; max-height: 400px; width: 100%; filter: grayscale(100%) opacity(70%);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa mostrando a localização da DUBCOM em Florianópolis"></iframe>
+             <!-- Added title, lazy loading, and subtle filter -->
         </div>
     </section>
 
-    <!-- Rodapé -->
-    <footer class="bg-dark text-white py-12">
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12"> <!-- Dark background works well -->
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Footer Col 1: Logo & Desc -->
                 <div>
-                    <img src="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/Horizontal.png" alt="Logotipo DUBCOM" class="h-10 mb-4">
-                    <p class="text-gray-400">Soluções de automação inteligentes para transformar as operações do seu negócio e a experiência do cliente.</p>
+                    <img src="https://f005.backblazeb2.com/file/DubcomChatwoot/Horizontal.png" alt="DUBCOM Automação Logotipo Rodapé" class="h-10 mb-4 filter brightness-0 invert"> <!-- Inverted logo for dark bg -->
+                    <p class="text-gray-400">Soluções de automação inteligentes...</p>
                 </div>
-                
+                <!-- Footer Col 2: Quick Links -->
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Links Rápidos</h3>
+                    <h3 class="text-lg font-bold mb-4 text-white">Links Rápidos</h3>
                     <ul class="space-y-2">
                         <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Início</a></li>
                         <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Serviços</a></li>
@@ -603,171 +491,277 @@
                         <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contato</a></li>
                     </ul>
                 </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Serviços</h3>
+                <!-- Footer Col 3: Services Links -->
+                 <div>
+                    <h3 class="text-lg font-bold mb-4 text-white">Serviços</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Automação de Processos</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Integração de Sistemas</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Bots de WhatsApp</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Implementação Chatwoot</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Marketing Mautic</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Automação de Processos</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Integração de Sistemas</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Bots de WhatsApp</a></li>
+                        <li><a href="#solutions" class="text-gray-400 hover:text-white transition duration-300">Implementação Chatwoot</a></li>
+                        <li><a href="#solutions" class="text-gray-400 hover:text-white transition duration-300">Marketing Mautic</a></li>
                     </ul>
                 </div>
-                
+                <!-- Footer Col 4: Newsletter -->
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
-                    <p class="text-gray-400 mb-4">Assine nossa newsletter para receber as últimas atualizações e insights.</p>
-                    <form class="flex">
-                        <input type="email" placeholder="Seu email" class="px-4 py-2 rounded-l-lg text-dark w-full">
-                        <button type="submit" class="bg-primary px-4 py-2 rounded-r-lg hover:bg-opacity-90 transition duration-300">
+                    <h3 class="text-lg font-bold mb-4 text-white">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Assine nossa newsletter...</p>
+                     <!-- Newsletter Form -->
+                    <form id="newsletter-form" class="flex">
+                        <label for="newsletter-email" class="sr-only">Email para Newsletter</label> <!-- Label for accessibility -->
+                        <input type="email" id="newsletter-email" name="newsletter_email" placeholder="Seu email" required class="px-4 py-2 rounded-l-lg text-dark dark:text-light bg-light dark:bg-gray-700 border border-gray-300 dark:border-gray-600 w-full focus:ring-primary focus:border-primary focus:ring-1">
+                        <button type="submit" aria-label="Assinar Newsletter" class="bg-primary px-4 py-2 rounded-r-lg hover:bg-opacity-90 dark:hover:bg-blue-600 transition duration-300">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
+                    <div id="newsletter-success-message" class="mt-2 text-sm text-green-400 hidden">Inscrição realizada com sucesso!</div>
+                    <div id="newsletter-error-message" class="mt-2 text-sm text-red-400 hidden">Erro ao inscrever. Tente novamente.</div>
                 </div>
             </div>
-            
-            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 mb-4 md:mb-0">© 2023 DUBCOM. Todos os direitos reservados.</p>
+            <div class="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2024 DUBCOM. Todos os direitos reservados.</p> <!-- Updated Year -->
                 <div class="flex space-x-6">
-                    <a href="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/en/index_en.html" class="text-gray-400 hover:text-white transition duration-300">Política de Privacidade</a>
+                    <!-- Update links if you have actual policy pages -->
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Política de Privacidade</a>
                     <a href="#" class="text-gray-400 hover:text-white transition duration-300">Termos de Serviço</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Botão Voltar ao Topo -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-opacity-90 transition duration-300 hidden">
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-opacity-90 dark:hover:bg-blue-600 transition duration-300 opacity-0 pointer-events-none" aria-label="Voltar ao topo">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Modal -->
+    <!-- Modal (Structure seems fine, needs trigger) -->
     <div id="modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div class="modal-content bg-white rounded-lg max-w-md w-full p-6">
+        <div class="modal-content bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6 transition-colors duration-300">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold">Obrigado!</h3>
-                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                <h3 class="text-xl font-bold text-light-text dark:text-dark-text">Obrigado!</h3>
+                <button id="close-modal" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" aria-label="Fechar modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <p class="text-gray-600 mb-6">Sua mensagem foi enviada com sucesso. Nossa equipe entrará em contato em breve.</p>
-            <button id="modal-ok" class="w-full bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-300">OK</button>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Sua mensagem foi enviada com sucesso. Nossa equipe entrará em contato em breve.</p>
+            <button id="modal-ok" class="w-full bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 dark:hover:bg-blue-600 transition duration-300">OK</button>
         </div>
     </div>
 
-    <script>
-        // Alternar menu móvel
+    <!-- Defer all scripts to load after HTML parsing -->
+    <script defer>
+        // Dark Mode Toggle Logic
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        if (darkModeToggle) {
+          // Update icon based on current theme
+          const updateIcon = () => {
+              const isDark = document.documentElement.classList.contains('dark');
+              const moonIcon = darkModeToggle.querySelector('.fa-moon');
+              const sunIcon = darkModeToggle.querySelector('.fa-sun');
+              if (moonIcon && sunIcon) {
+                  moonIcon.classList.toggle('hidden', isDark);
+                  sunIcon.classList.toggle('hidden', !isDark);
+              }
+          };
+          darkModeToggle.addEventListener('click', () => {
+            toggleTheme(); // Function defined in <head> script
+            updateIcon();
+          });
+          updateIcon(); // Set initial icon state
+        }
+
+        // Mobile Menu Toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // Envio de formulário
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                // Optional: Add ARIA attribute toggling
+                const isExpanded = !mobileMenu.classList.contains('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', isExpanded);
+            });
+        }
+
+        // Contact Form Submission
         const contactForm = document.getElementById('contact-form');
         const successMessage = document.getElementById('success-message');
-        
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Capturar os dados do formulário
-            const formData = new FormData(contactForm);
-            const data = {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                message: formData.get('message')
-            };
+        const errorMessage = document.getElementById('error-message'); // Get error message element
+        const contactSubmitButton = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
 
-            try {
-                // Enviar os dados para o webhook
-                const response = await fetch('https://workflows.dubcom.com.br/webhook-test/3f858fbf-abf0-44a3-903b-ce27ca28de5d', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
+        if (contactForm && successMessage && errorMessage && contactSubmitButton) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                contactSubmitButton.disabled = true; // Disable button on submit
+                contactSubmitButton.textContent = 'Enviando...'; // Provide feedback
+                successMessage.classList.remove('show'); // Hide previous messages
+                errorMessage.classList.add('hidden');
 
-                if (response.ok) {
-                    // Resetar o formulário
-                    contactForm.reset();
-                    
-                    // Mostrar mensagem de sucesso
+                const formData = new FormData(contactForm);
+                const data = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    message: formData.get('message'),
+                    // Add source if needed for n8n workflow differentiation
+                    formSource: 'contact-page-pt'
+                };
+
+                 // Simple Honeypot Check
+                if (formData.get('honey')) {
+                    console.log("Honeypot detected!");
+                    // Optionally show a generic success message to the bot
                     successMessage.classList.add('show');
-                    
-                    // Ocultar após 5 segundos
-                    setTimeout(() => {
-                        successMessage.classList.remove('show');
-                    }, 5000);
-                } else {
-                    console.error('Erro ao enviar o formulário:', response.statusText);
+                    setTimeout(() => { successMessage.classList.remove('show'); }, 5000);
+                    contactForm.reset();
+                    contactSubmitButton.disabled = false;
+                    contactSubmitButton.textContent = 'Enviar Mensagem';
+                    return; // Stop submission
                 }
-            } catch (error) {
-                console.error('Erro ao enviar o formulário:', error);
-            }
-        });
-        
-        // Botão voltar ao topo
+
+
+                try {
+                    // USE THE CORRECT WEBHOOK URL - Using the non-test one from the English version
+                    const response = await fetch('https://workflows.dubcom.com.br/webhook/3f858fbf-abf0-44a3-903b-ce27ca28de5d', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.ok) {
+                        contactForm.reset();
+                        successMessage.classList.add('show');
+                        // Optional: Trigger your modal here if desired
+                        // showModal();
+                        setTimeout(() => { successMessage.classList.remove('show'); }, 5000);
+                    } else {
+                        console.error('Erro ao enviar o formulário:', response.status, await response.text());
+                        errorMessage.textContent = `Erro ${response.status}. Tente novamente.`;
+                        errorMessage.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Erro de rede ou script ao enviar o formulário:', error);
+                    errorMessage.textContent = 'Erro de conexão. Verifique sua internet.';
+                    errorMessage.classList.remove('hidden');
+                } finally {
+                     contactSubmitButton.disabled = false; // Re-enable button
+                     contactSubmitButton.textContent = 'Enviar Mensagem'; // Restore text
+                }
+            });
+        }
+
+        // Newsletter Form Submission
+        const newsletterForm = document.getElementById('newsletter-form');
+        const newsletterSuccess = document.getElementById('newsletter-success-message');
+        const newsletterError = document.getElementById('newsletter-error-message');
+        const newsletterSubmitButton = newsletterForm ? newsletterForm.querySelector('button[type="submit"]') : null;
+
+        if (newsletterForm && newsletterSuccess && newsletterError && newsletterSubmitButton) {
+             newsletterForm.addEventListener('submit', async (e) => {
+                 e.preventDefault();
+                 newsletterSubmitButton.disabled = true;
+                 newsletterSuccess.classList.add('hidden');
+                 newsletterError.classList.add('hidden');
+
+                 const emailInput = document.getElementById('newsletter-email');
+                 const email = emailInput.value;
+
+                 // **ACTION REQUIRED:** Replace console.log with your actual fetch call
+                 console.log("Newsletter signup attempt for:", email);
+                 alert(`Placeholder: Newsletter form submitted for ${email}. Replace this alert with your fetch call.`);
+
+                 // --- Example Fetch Call (replace with your actual endpoint) ---
+                 /*
+                 const newsletterWebhookUrl = 'YOUR_NEWSLETTER_WEBHOOK_URL_HERE'; // <-- PUT YOUR URL HERE
+                 try {
+                     const response = await fetch(newsletterWebhookUrl, {
+                         method: 'POST',
+                         headers: { 'Content-Type': 'application/json' },
+                         body: JSON.stringify({ email: email, source: 'footer-newsletter-pt' })
+                     });
+
+                     if (response.ok) {
+                         newsletterForm.reset();
+                         newsletterSuccess.classList.remove('hidden');
+                         setTimeout(() => { newsletterSuccess.classList.add('hidden'); }, 5000);
+                     } else {
+                         console.error('Erro na inscrição da newsletter:', response.status, await response.text());
+                         newsletterError.textContent = `Erro ${response.status}. Tente novamente.`;
+                         newsletterError.classList.remove('hidden');
+                     }
+                 } catch (error) {
+                     console.error('Erro de rede na inscrição da newsletter:', error);
+                     newsletterError.textContent = 'Erro de conexão.';
+                     newsletterError.classList.remove('hidden');
+                 } finally {
+                     newsletterSubmitButton.disabled = false;
+                 }
+                 */
+                 // --- End Example Fetch Call ---
+
+                 // Remove this line once you add the fetch call:
+                 newsletterSubmitButton.disabled = false;
+
+             });
+        }
+
+        // Back to Top Button
         const backToTopButton = document.getElementById('back-to-top');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.remove('hidden');
-            } else {
-                backToTopButton.classList.add('hidden');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        // Funcionalidade do modal
+        if (backToTopButton) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
+                    backToTopButton.classList.add('opacity-100');
+                } else {
+                    backToTopButton.classList.remove('opacity-100');
+                    backToTopButton.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Modal Functionality
         const modal = document.getElementById('modal');
-        const closeModal = document.getElementById('close-modal');
-        const modalOk = document.getElementById('modal-ok');
-        
+        const closeModalButton = document.getElementById('close-modal');
+        const modalOkButton = document.getElementById('modal-ok');
+
         function showModal() {
-            modal.classList.add('show');
+            if(modal) modal.classList.add('show');
         }
-        
         function hideModal() {
-            modal.classList.remove('show');
+             if(modal) modal.classList.remove('show');
         }
-        
-        closeModal.addEventListener('click', hideModal);
-        modalOk.addEventListener('click', hideModal);
-        
-        // Fechar modal ao clicar fora
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                hideModal();
-            }
-        });
-        
-        // Rolagem suave para links âncora
+
+        if(closeModalButton) closeModalButton.addEventListener('click', hideModal);
+        if(modalOkButton) modalOkButton.addEventListener('click', hideModal);
+        if(modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) hideModal();
+            });
+        }
+
+        // Smooth Scrolling for Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                // Allow normal behaviour for non-anchor links or href="#"
+                if (href === '#' || !href.startsWith('#') || href.length === 1) return;
+
                 e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
+                const targetElement = document.querySelector(href);
                 if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Fechar menu móvel se estiver aberto
-                    if (!mobileMenu.classList.contains('hidden')) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    // Close mobile menu if open and the link is clicked
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
+                        if (mobileMenuButton) mobileMenuButton.setAttribute('aria-expanded', 'false');
                     }
                 }
             });
         });
+
     </script>
-</html> 
+
+</body>
+</html>
