@@ -138,90 +138,6 @@
         </form>
     </div>
 
-    <!-- SEU SCRIPT EXISTENTE (Chatwoot + N8N) -->
-    <script>
-        // ... (seu script JS existente aqui) ...
-        // --- CÓDIGO EXISTENTE DO CHATWOOT ---
-        console.log("Formulário Script Iniciado.");
-        window.addEventListener("message", function (event) {
-            console.log("Mensagem recebida:", event.data);
-             try {
-                if (typeof event.data === 'string' && event.data.startsWith('{')) {
-                    const eventData = JSON.parse(event.data);
-                    if (eventData && eventData.event === "appContext" && eventData.data && eventData.data.contact) {
-                        const contact = eventData.data.contact;
-                        console.log("Preenchendo dados do contato:", contact);
-                        const nameField = document.getElementById('name');
-                        const emailField = document.getElementById('email');
-                        const phoneField = document.getElementById('phone');
-                        if(nameField) nameField.value = contact.name || '';
-                        if(emailField) emailField.value = contact.email || '';
-                        if(phoneField) phoneField.value = contact.phone_number || '';
-                    }
-                }
-             } catch (error) {
-                 console.error("Erro ao processar mensagem do Chatwoot:", error);
-             }
-        });
-        console.log("Enviando 'chatwoot-dashboard-app:fetch-info' para o parent.");
-        if (window.parent && window.parent !== window) {
-           window.parent.postMessage('chatwoot-dashboard-app:fetch-info', '*');
-        } else {
-           console.warn("Rodando fora de um iframe ou window.parent não acessível.");
-        }
-        // --- FIM DO CÓDIGO CHATWOOT ---
-
-
-        // --- CÓDIGO PARA SUBMISSÃO PARA O N8N ---
-        const contactForm = document.getElementById('contact-form');
-        const webhookUrl = 'https://workflows.dubcom.com.br/webhook/3f858fbf-abf0-44a3-903b-ce27ca28de5d';
-        const successModal = document.getElementById('success-modal');
-        const closeModalButton = document.getElementById('close-modal');
-
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(event) {
-                event.preventDefault(); 
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const phone = document.getElementById('phone').value;
-                const message = document.getElementById('message').value;
-                const formData = { name, email, phone, message };
-                console.log('Enviando os seguintes dados para o n8n:', formData); 
-
-                fetch(webhookUrl, {
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData), 
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.text().then(text => { throw new Error(`Erro Webhook: ${response.status} - ${text}`); });
-                    }
-                    return response.json().catch(() => ({ success: true, status: response.status }));
-                })
-                .then(data => {
-                    console.log('Sucesso! Resposta n8n:', data);
-                    successModal.classList.remove('hidden'); // Show the modal
-                    contactForm.reset(); // Clear the form fields
-                })
-                .catch((error) => {
-                    console.error('Erro ao enviar dados para n8n:', error);
-                    alert(`Erro ao enviar: ${error.message}`); 
-                });
-            });
-        } else {
-            console.error("Elemento do formulário com ID 'contact-form' não encontrado!");
-        }
-
-        // Close modal button event
-        if (closeModalButton) {
-            closeModalButton.addEventListener('click', function() {
-                successModal.classList.add('hidden'); // Hide the modal
-            });
-        }
-        // --- FIM DO CÓDIGO N8N ---
-    </script>
-
     <!-- Modal -->
     <div id="success-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
@@ -232,6 +148,61 @@
             </button>
         </div>
     </div>
+
+    <!-- SEU SCRIPT EXISTENTE (Chatwoot + N8N) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... existing code ...
+
+            const contactForm = document.getElementById('contact-form');
+            const webhookUrl = 'https://workflows.dubcom.com.br/webhook/3f858fbf-abf0-44a3-903b-ce27ca28de5d';
+            const successModal = document.getElementById('success-modal');
+            const closeModalButton = document.getElementById('close-modal');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); 
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const message = document.getElementById('message').value;
+                    const formData = { name, email, phone, message };
+                    console.log('Enviando os seguintes dados para o n8n:', formData); 
+
+                    fetch(webhookUrl, {
+                        method: 'POST', 
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData), 
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => { throw new Error(`Erro Webhook: ${response.status} - ${text}`); });
+                        }
+                        return response.json().catch(() => ({ success: true, status: response.status }));
+                    })
+                    .then(data => {
+                        console.log('Sucesso! Resposta n8n:', data);
+                        successModal.classList.remove('hidden'); // Show the modal
+                        contactForm.reset(); // Clear the form fields
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao enviar dados para n8n:', error);
+                        alert(`Erro ao enviar: ${error.message}`); 
+                    });
+                });
+            } else {
+                console.error("Elemento do formulário com ID 'contact-form' não encontrado!");
+            }
+
+            // Close modal button event
+            if (closeModalButton) {
+                closeModalButton.addEventListener('click', function() {
+                    successModal.classList.add('hidden'); // Hide the modal
+                });
+            }
+            // ... existing code ...
+        });
+    </script>
 
 </body>
 </html>
