@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Integração com Chatwoot</title>
     <!-- Favicon -->
-    <link rel="icon" href="https://pub-8f52d204ed064db89ad14d557601b5a0.r2.dev/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://f005.backblazeb2.com/favicon.ico" type="image/x-icon">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Font Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 
     <!-- Tailwind Config -->
     <script>
@@ -44,6 +45,7 @@
         }
     </script>
 
+
     <!-- Script Dark Mode -->
     <script>
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -53,16 +55,21 @@
         }
     </script>
 
+
 </head>
 <body class="font-sans bg-light dark:bg-dark text-dark dark:text-light antialiased">
+
 
     <!-- Container com padding (removido max-width e mx-auto, padding pode ser ajustado p-4 ou p-2 se necessário) -->
     <div class="p-4"> 
 
+
         <!-- Título (pode diminuir o mb-6 para mb-4 se precisar de mais espaço vertical) -->
         <h1 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Formulário de Integração</h1>
 
+
         <form id="contact-form" class="space-y-4">
+
 
             <!-- Campo Nome -->
             <div>
@@ -80,6 +87,7 @@
                            transition duration-150 ease-in-out text-sm"> 
             </div>
 
+
             <!-- Campo Email -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
@@ -96,6 +104,7 @@
                            transition duration-150 ease-in-out text-sm"> 
             </div>
 
+
             <!-- Campo Telefone -->
             <div>
                 <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefone</label>
@@ -110,6 +119,7 @@
                            focus:ring-primary focus:border-primary focus:ring-1 
                            transition duration-150 ease-in-out text-sm"> 
             </div>
+
 
             <!-- Campo Mensagem -->
             <div>
@@ -126,6 +136,7 @@
                            transition duration-150 ease-in-out text-sm"></textarea> 
             </div>
 
+
             <!-- Botão Enviar -->
             <button 
                 type="submit" 
@@ -138,6 +149,7 @@
         </form>
     </div>
 
+
     <!-- Modal -->
     <div id="success-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
@@ -149,15 +161,18 @@
         </div>
     </div>
 
+
     <!-- SEU SCRIPT EXISTENTE (Chatwoot + N8N) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // ... existing code ...
 
+
             const contactForm = document.getElementById('contact-form');
             const webhookUrl = 'https://workflows.dubcom.com.br/webhook/3f858fbf-abf0-44a3-903b-ce27ca28de5d';
             const successModal = document.getElementById('success-modal');
             const closeModalButton = document.getElementById('close-modal');
+
 
             if (contactForm) {
                 contactForm.addEventListener('submit', function(event) {
@@ -168,6 +183,7 @@
                     const message = document.getElementById('message').value;
                     const formData = { name, email, phone, message };
                     console.log('Enviando os seguintes dados para o n8n:', formData); 
+
 
                     fetch(webhookUrl, {
                         method: 'POST', 
@@ -194,6 +210,7 @@
                 console.error("Elemento do formulário com ID 'contact-form' não encontrado!");
             }
 
+
             // Close modal button event
             if (closeModalButton) {
                 closeModalButton.addEventListener('click', function() {
@@ -203,6 +220,7 @@
             // ... existing code ...
         });
     </script>
+
 
 </body>
 </html>
